@@ -55,12 +55,12 @@ public class Houston {
 	private static void sendCommand() {
 		System.out.println("Houston, sending command: " + currentOperation.name() + ", " + currentSpeed);
 		Packet packet = new Packet(currentOperation, currentSpeed);
-		//PacketManager.instance().sendPacket(packet);
+		PacketManager.instance().sendPacket(packet);
 		main.updateValues(currentOperation, currentSpeed);
 	}
 	
 	public static void main(String[] args) {
-		//PacketManager.instance().setUp();
+		PacketManager.instance().setUp();
 		main = MainFrame.createFrame();
 		main.addKeyListener(new KeyboardController());
 	}
