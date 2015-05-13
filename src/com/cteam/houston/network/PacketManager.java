@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class PacketManager {
-	private static final String HOST = "TBD";
+	private static final String HOST = "192.168.7.2";
 	private static final int PORT = 9001;
 
 	private static PacketManager instance;
