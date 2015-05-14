@@ -12,56 +12,70 @@ import com.cteam.houston.ui.MainFrame;
 public class Houston {
 
 	private static MainFrame main;
-	private static Command currentOperation = Command.DRIVE_FORWARD;
 	private static byte currentSpeed = 0;
+	private static byte currentDirection = 0;
 	
 	public static void speedUp() {
 		currentSpeed += (byte) 10;
-		if (currentSpeed < 0) currentSpeed = 127;
-		sendCommand();
+		if (currentSpeed > 63) currentSpeed = 63;
+		sendCommand(Command.SPEED);
 	}
 	
 	public static void slowDown() {
 		currentSpeed -= (byte) 10;
-		if (currentSpeed < 0) currentSpeed = 0;
-		sendCommand();
+		if (currentSpeed < -64) currentSpeed = -64;
+		sendCommand(Command.SPEED);
 	}
 	
 	public static void forward() {
-		currentOperation = Command.DRIVE_FORWARD;
-		sendCommand();
+		currentDirection = 0;
+		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void backward() {
-		currentOperation = Command.DRIVE_BACKWARD;
-		sendCommand();
+		currentDirection = 0;
+		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void turnRight() {
-		currentOperation = Command.TURN_RIGHT;
-		sendCommand();
+		currentDirection += 10;
+		if (currentDirection > 63) currentDirection = 63;
+		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void turnLeft() {
-		currentOperation = Command.TURN_LEFT;
-		sendCommand();
+		currentDirection -= 10;
+		if (currentDirection < -64) currentDirection = -64;
+		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void stop() {
-		currentOperation = Command.DRIVE_FORWARD;
+		currentDirection = 0;
 		currentSpeed = 0;
-		sendCommand();
-		main.updateValues(currentOperation, -1);
+		sendCommand(Command.SPEED);
+		sendCommand(Command.DIRECTION);
 	}
-	private static void sendCommand() {
-		System.out.println("Houston, sending command: " + currentOperation.name() + ", " + currentSpeed);
-		Packet packet = new Packet(currentOperation, currentSpeed);
+	
+	private static void sendCommand(Command command) {
+		byte value;
+		switch (command) {
+			case SPEED:
+				value = currentSpeed;
+				break;
+			case DIRECTION:
+				value = currentDirection;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid command given!");
+		}
+		System.out.println("Houston, sending command: " + command.name() + ", " + value);
+		Packet packet = new Packet(command, value);
 		PacketManager.instance().sendPacket(packet);
-		main.updateValues(currentOperation, currentSpeed);
+		main.updateValues(command, value);
 	}
 	
 	public static void main(String[] args) {
-		//PacketManager.instance().setUp();
+		PacketManager.instance().setUp();
 		main = MainFrame.createFrame();
 		main.addKeyListener(new KeyboardController());
 		

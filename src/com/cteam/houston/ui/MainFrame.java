@@ -16,7 +16,9 @@ public class MainFrame extends JFrame {
 	private static final int WIDTH = 800;
 	
 	private JLabel commandLabel;
-	private JLabel powerLabel;
+	private JLabel speedLabel;
+	private JLabel directionLabel;
+	
 	
 	private MainFrame() {}
 	
@@ -34,13 +36,16 @@ public class MainFrame extends JFrame {
 		mainContent.setLayout(new BorderLayout());
 		
 		commandLabel = new JLabel("Command: Awaiting command...");
-		powerLabel = new JLabel("Power: Over 9000!");
+		speedLabel = new JLabel("Power: Over 9000!");
+		directionLabel = new JLabel("Direction: To the cloud!");
 		
 		Box labelBox = Box.createVerticalBox();
 		labelBox.add(Box.createVerticalGlue());
 		labelBox.add(commandLabel);
 		labelBox.add(Box.createVerticalStrut(20));
-		labelBox.add(powerLabel);
+		labelBox.add(speedLabel);
+		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(directionLabel);
 		labelBox.add(Box.createVerticalGlue());
 		
 		Box mainBox = Box.createHorizontalBox();
@@ -50,34 +55,17 @@ public class MainFrame extends JFrame {
 		mainContent.add(mainBox, "Center");
 	}
 	
-	public void updateValues(Command command, int power) {
-		if (power == -1) {
-			setCommandText("Awaiting command...");
-			setPowerText("Over 9000!");
-			return;
-		}
+	public void updateValues(Command command, int value) {
 		switch (command) {
-			case DRIVE_BACKWARD:
-				setCommandText("Drive Backwards");
+			case SPEED:
+				commandLabel.setText("Command: Speed");
+				speedLabel.setText("Speed: " + String.valueOf(value));
 				break;
-			case DRIVE_FORWARD:
-				setCommandText("Drive Forwards");
-				break;
-			case TURN_LEFT:
-				setCommandText("Turn Left");
-				break;
-			case TURN_RIGHT:
-				setCommandText("Turn Right");
+			case DIRECTION:
+				commandLabel.setText("Command: Direction");
+				directionLabel.setText("Direction: " + String.valueOf(value));
 				break;
 		}
-		setPowerText(String.valueOf(power));
-	}
-	
-	private void setCommandText(String text) {
-		commandLabel.setText("Command: " + text);
-	}
-	
-	private void setPowerText(String text) {
-		powerLabel.setText("Power: " + text);
+		
 	}
 }

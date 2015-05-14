@@ -1,7 +1,7 @@
 package com.cteam.houston.network;
 
 public enum Command {
-	DRIVE_FORWARD(0), DRIVE_BACKWARD(1), TURN_LEFT(2), TURN_RIGHT(3);
+	SPEED(0), DIRECTION(1);
 	
 	public final byte value;
 	
