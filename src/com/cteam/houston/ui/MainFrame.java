@@ -13,8 +13,8 @@ import com.cteam.houston.network.Command;
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -7102600235458420220L;
 
-	private static final int HEIGHT = 600;
-	private static final int WIDTH = 800;
+	private static final int HEIGHT = 200;
+	private static final int WIDTH = 300;
 	
 	private JLabel connectionLabel;
 	private JLabel commandLabel;
