@@ -56,6 +56,16 @@ public class Houston {
 		sendCommand(Command.DIRECTION);
 	}
 	
+	public static void setSpeed(byte speed) {
+		currentSpeed = speed;
+		sendCommand(Command.SPEED);
+	}
+	
+	public static void setDirection(byte direction) {
+		currentDirection = direction;
+		sendCommand(Command.DIRECTION);
+	}
+	
 	private static void sendCommand(Command command) {
 		byte value;
 		switch (command) {
