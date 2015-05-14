@@ -44,7 +44,7 @@ public class GamepadHandler implements DeviceListener {
 		// TODO Implement this
 		System.out.println("Axis Input: " + "Device: " + device + " Axis: " +
 					axisId + " New Value: " + newValue + " Last Value: " + lastValue);
-		Axis axis = Axis.values()[axisId - 5];
+		Axis axis = Axis.values()[axisId];
 		switch (axis) {
 			case LEFT_STICK_Y:
 				byte speed = (byte) (newValue * 63);
@@ -52,7 +52,7 @@ public class GamepadHandler implements DeviceListener {
 				break;
 			case RIGHT_STICK_X:
 				byte direction = (byte) (newValue * 63);
-				Houston.setSpeed(direction);
+				Houston.setDirection(direction);
 				break;
 			default:
 				break;
