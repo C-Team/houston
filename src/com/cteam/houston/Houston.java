@@ -1,7 +1,5 @@
 package com.cteam.houston;
 
-import sun.util.resources.cldr.ts.CurrencyNames_ts;
-
 import com.cteam.houston.network.Command;
 import com.cteam.houston.network.Packet;
 import com.cteam.houston.network.PacketManager;
