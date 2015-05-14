@@ -1,6 +1,7 @@
 package com.cteam.houston.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.Box;
@@ -15,6 +16,7 @@ public class MainFrame extends JFrame {
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 800;
 	
+	private JLabel connectionLabel;
 	private JLabel commandLabel;
 	private JLabel speedLabel;
 	private JLabel directionLabel;
@@ -35,12 +37,16 @@ public class MainFrame extends JFrame {
 		Container mainContent = getContentPane();
 		mainContent.setLayout(new BorderLayout());
 		
+		connectionLabel = new JLabel("Connection Status: Not Connected");
+		connectionLabel.setForeground(Color.RED);
 		commandLabel = new JLabel("Command: Awaiting command...");
 		speedLabel = new JLabel("Power: Over 9000!");
 		directionLabel = new JLabel("Direction: To the cloud!");
 		
 		Box labelBox = Box.createVerticalBox();
 		labelBox.add(Box.createVerticalGlue());
+		labelBox.add(connectionLabel);
+		labelBox.add(Box.createVerticalStrut(20));
 		labelBox.add(commandLabel);
 		labelBox.add(Box.createVerticalStrut(20));
 		labelBox.add(speedLabel);
@@ -52,7 +58,14 @@ public class MainFrame extends JFrame {
 		mainBox.add(Box.createHorizontalGlue());
 		mainBox.add(labelBox);
 		mainBox.add(Box.createHorizontalGlue());
+		
 		mainContent.add(mainBox, "Center");
+	}
+	
+	public void setConnectionStatus(boolean connected) {
+		connectionLabel.setText("Connection Status: " 
+				+ (connected ? "Connected" : "Not Connected"));
+		connectionLabel.setForeground(connected ? Color.GREEN : Color.RED);
 	}
 	
 	public void updateValues(Command command, int value) {

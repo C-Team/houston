@@ -6,6 +6,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.swing.SwingUtilities;
+
 public class PacketManager {
 	private static final String HOST = "192.168.7.2";
 	private static final int PORT = 9001;
@@ -15,12 +17,14 @@ public class PacketManager {
 	
 	private static PacketManager instance;
 	
+	private ConnectionListener listener;
 	private Socket socket;
 	private LinkedBlockingQueue<Packet> packetQueue;
 	
+	private boolean isConnected;
+	
 	private PacketManager() {
 		packetQueue = new LinkedBlockingQueue<>(MAX_QUEUE_SIZE);
-		
 	}
 	
 	public static PacketManager instance() {
@@ -28,6 +32,14 @@ public class PacketManager {
 			instance = new PacketManager();
 		}
 		return instance;
+	}
+	
+	public void setConnectionListener(ConnectionListener listener) {
+		this.listener = listener;
+	}
+	
+	public boolean isConnected() {
+		return isConnected;
 	}
 	
 	public void setUp() {
@@ -41,6 +53,15 @@ public class PacketManager {
 					try {
 						Packet packet = packetQueue.take();
 						while (!sendPacketInternal(packet)) {
+							if (listener != null) {
+								SwingUtilities.invokeLater(new Runnable() {
+									@Override
+									public void run() {
+										isConnected = false;
+										listener.onDisconnect();
+									}
+								});
+							}
 							// There is an issue with the connection, try to reestablish.
 							try {
 								socket.close();
@@ -104,6 +125,15 @@ public class PacketManager {
 			}
 		}
 		System.out.println("Successfuly connected to Apollo 13!");
+		if (listener != null) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					isConnected = true;
+					listener.onConnect();
+				}
+			});
+		}
 		return true;
 	}
 	

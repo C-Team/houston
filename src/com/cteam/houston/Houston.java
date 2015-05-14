@@ -4,6 +4,7 @@ import com.cteam.houston.input.GamepadHandler;
 import com.cteam.houston.input.GamepadListener;
 import com.cteam.houston.input.NativeGamepad;
 import com.cteam.houston.network.Command;
+import com.cteam.houston.network.ConnectionListener;
 import com.cteam.houston.network.Packet;
 import com.cteam.houston.network.PacketManager;
 import com.cteam.houston.ui.KeyboardController;
@@ -85,9 +86,21 @@ public class Houston {
 	}
 	
 	public static void main(String[] args) {
-		PacketManager.instance().setUp();
 		main = MainFrame.createFrame();
 		main.addKeyListener(new KeyboardController());
+		
+		PacketManager.instance().setConnectionListener(new ConnectionListener() {
+			@Override
+			public void onDisconnect() {
+				main.setConnectionStatus(false);
+			}
+			
+			@Override
+			public void onConnect() {
+				main.setConnectionStatus(true);
+			}
+		});
+		PacketManager.instance().setUp();
 		
 		GamepadListener.getInstance().addDeviceListener(new GamepadHandler());
 		NativeGamepad.addListener(GamepadListener.getInstance());
