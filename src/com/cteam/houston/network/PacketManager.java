@@ -20,7 +20,9 @@ public class PacketManager {
 	private ConnectionListener listener;
 	private Socket socket;
 	private LinkedBlockingQueue<Packet> packetQueue;
+	private Thread networkThread;
 	
+	private boolean shouldRun;
 	private boolean isConnected;
 	
 	private PacketManager() {
@@ -43,13 +45,14 @@ public class PacketManager {
 	}
 	
 	public void setUp() {
-		new Thread(new Runnable() {
+		shouldRun = true;
+		networkThread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// This will block until a connection is established or we are told to bail.
 				if (!establishConnection()) return; 
-				while (true) {
+				while (shouldRun) {
 					try {
 						Packet packet = packetQueue.take();
 						while (!sendPacketInternal(packet)) {
@@ -75,16 +78,18 @@ public class PacketManager {
 					}
 				}
 			}
-		}, "Network Thread").start();
+		}, "Network Thread"); 
+		networkThread.start();
 	}
 	
 	public void tearDown() {
 		if (socket != null) {
 			try {
+				shouldRun = false;
 				socket.close();
-			} catch (IOException except) {
-				// Nothing we can do
-				except.printStackTrace();
+				networkThread.join();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -104,16 +109,25 @@ public class PacketManager {
 	private boolean establishConnection() {
 		InetSocketAddress address = new InetSocketAddress(HOST, PORT);
 		
-		while (socket == null) {
+		while (socket == null && shouldRun) {
 			try {
 				socket = new Socket();
 				socket.connect(address, CONNECT_TIMEOUT);
 				socket.setKeepAlive(true);
+				System.out.println("Successfuly connected to Apollo 13!");
+				if (listener != null) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							isConnected = true;
+							listener.onConnect();
+						}
+					});
+				}
 			} catch (Exception except) {
 				socket = null;
 				
-				System.err.println("Houston, we have a problem: Failed to create socket. Retrying...\n");
-				except.printStackTrace(System.err);
+				System.err.println("Houston, we have a problem: Failed to connect socket. Retrying...");
 				
 				try {
 					Thread.sleep(RETRY_RATE);
@@ -124,17 +138,8 @@ public class PacketManager {
 				}
 			}
 		}
-		System.out.println("Successfuly connected to Apollo 13!");
-		if (listener != null) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					isConnected = true;
-					listener.onConnect();
-				}
-			});
-		}
-		return true;
+		
+		return false;
 	}
 	
 	private boolean sendPacketInternal(Packet packet) {

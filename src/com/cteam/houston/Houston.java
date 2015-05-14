@@ -105,6 +105,14 @@ public class Houston {
 		GamepadListener.getInstance().addDeviceListener(new GamepadHandler());
 		NativeGamepad.addListener(GamepadListener.getInstance());
 		NativeGamepad.start();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Cleaning up...");
+				PacketManager.instance().tearDown();
+			}
+		}));
 	}
 	
 }
