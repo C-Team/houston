@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.SwingUtilities;
 
 public class PacketManager {
-	private static final String HOST = "192.168.7.2";
+	private static final String HOST = "192.168.0.103";
 	private static final int PORT = 9001;
 	private static final int RETRY_RATE = 250; // ms
 	private static final int CONNECT_TIMEOUT = 1000; // ms
@@ -87,7 +87,6 @@ public class PacketManager {
 			try {
 				shouldRun = false;
 				socket.close();
-				networkThread.join();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -124,6 +123,7 @@ public class PacketManager {
 						}
 					});
 				}
+				return true;
 			} catch (Exception except) {
 				socket = null;
 				

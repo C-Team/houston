@@ -36,6 +36,24 @@ public class KeyboardController implements KeyListener {
 			case KeyEvent.VK_SPACE:
 				Houston.stop();
 				break;
+			case KeyEvent.VK_J:
+				Houston.increaseDildoWheelSpeed();
+				break;
+			case KeyEvent.VK_K:
+				Houston.decreaseDildoWheelSpeed();
+				break;
+			case KeyEvent.VK_U:
+				Houston.increaseDildoVerticalSpeed();
+				break;
+			case KeyEvent.VK_I:
+				Houston.decreaseDildoVerticalSpeed();
+				break;
+			case KeyEvent.VK_M:
+				Houston.increaseDildoVerticalPosition();
+				break;
+			case KeyEvent.VK_COMMA:
+				Houston.decreaseDildoVerticalPosition();
+				break;
 		}
 	}
 
