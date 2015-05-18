@@ -35,7 +35,6 @@ public class MainFrame extends JFrame {
 	private JLabel dildoSpeedLabel;
 	private JLabel dildoPositionLabel;
 	
-	
 	private MainFrame() {}
 	
 	public static MainFrame createFrame() {
@@ -73,7 +72,6 @@ public class MainFrame extends JFrame {
 				connectButton.removeActionListener(this);
 			}
 		});
-		
 		
 		hostText = new JTextField(DEFAULT_IP);
 		hostText.setToolTipText("Apollo's IP Address");
