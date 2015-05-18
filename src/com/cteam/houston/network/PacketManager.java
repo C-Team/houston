@@ -86,6 +86,8 @@ public class PacketManager {
 		shouldRun = false;
 		if (socket != null) {
 			try {
+				socket.shutdownOutput();
+				socket.getInputStream().read();
 				socket.close();
 			} catch (Exception e) {
 				e.printStackTrace();
