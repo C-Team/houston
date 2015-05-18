@@ -6,7 +6,7 @@ import com.cteam.houston.input.NativeGamepad;
 import com.cteam.houston.network.Command;
 import com.cteam.houston.network.ConnectionListener;
 import com.cteam.houston.network.Packet;
-import com.cteam.houston.network.PacketManager;
+import com.cteam.houston.network.NetworkManager;
 import com.cteam.houston.ui.KeyboardController;
 import com.cteam.houston.ui.MainFrame;
 
@@ -144,23 +144,23 @@ public class Houston {
 		}
 		System.out.println("Houston, sending command: " + command.name() + ", " + value);
 		Packet packet = new Packet(command, value);
-		PacketManager.instance().sendPacket(packet);
+		NetworkManager.instance().sendPacket(packet);
 		main.updateValues(command, value);
 	}
 	
 	public static void connect() {
-		PacketManager.instance().setUp();
+		NetworkManager.instance().setUp();
 	}
 	
 	public static void disconnect() {
-		PacketManager.instance().tearDown();
+		NetworkManager.instance().tearDown();
 	}
 	
 	public static void main(String[] args) {
 		main = MainFrame.createFrame();
 		main.addKeyListener(new KeyboardController());
 		
-		PacketManager.instance().setConnectionListener(new ConnectionListener() {
+		NetworkManager.instance().setConnectionListener(new ConnectionListener() {
 			@Override
 			public void onDisconnect() {
 				main.setConnectionStatus(false);
@@ -180,7 +180,7 @@ public class Houston {
 			@Override
 			public void run() {
 				System.out.println("Cleaning up...");
-				PacketManager.instance().tearDown();
+				NetworkManager.instance().tearDown();
 			}
 		}));
 	}

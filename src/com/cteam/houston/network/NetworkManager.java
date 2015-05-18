@@ -8,14 +8,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.SwingUtilities;
 
-public class PacketManager {
+public class NetworkManager {
 	private static final String HOST = "192.168.0.103";
 	private static final int PORT = 9001;
 	private static final int RETRY_RATE = 250; // ms
 	private static final int CONNECT_TIMEOUT = 1000; // ms
 	private static final int MAX_QUEUE_SIZE = 100;
 	
-	private static PacketManager instance;
+	private static NetworkManager instance;
 	
 	private ConnectionListener listener;
 	private Socket socket;
@@ -25,13 +25,13 @@ public class PacketManager {
 	private boolean shouldRun;
 	private boolean isConnected;
 	
-	private PacketManager() {
+	private NetworkManager() {
 		packetQueue = new LinkedBlockingQueue<>(MAX_QUEUE_SIZE);
 	}
 	
-	public static PacketManager instance() {
+	public static NetworkManager instance() {
 		if (instance == null) {
-			instance = new PacketManager();
+			instance = new NetworkManager();
 		}
 		return instance;
 	}
