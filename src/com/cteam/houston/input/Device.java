@@ -37,7 +37,7 @@ public class Device {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{");
-		builder.append(getClass().toString());
+		builder.append(getClass().getSimpleName());
 		builder.append(": [ ");
 		builder.append("id:");
 		builder.append(id);

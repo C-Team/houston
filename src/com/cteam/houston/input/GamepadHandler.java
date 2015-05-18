@@ -30,14 +30,22 @@ public class GamepadHandler implements DeviceListener {
 		// TODO Implement this
 		System.out.println("Button Input: " + "Device: " + device + " Button: " + 
 					buttonId + " State: " + pressed);
+		
+		// Button id's are offset by 5
+		Button button = Button.values()[buttonId - 5];
+		switch (button) {
+		// TODO: Add mappings
+			default:
+				break;
+		}
 	}
 
 	@Override
 	public void handleAxis(Device device, int axisId, float newValue,
 			float lastValue) {
-		// TODO Implement this
 		System.out.println("Axis Input: " + "Device: " + device + " Axis: " +
 					axisId + " New Value: " + newValue + " Last Value: " + lastValue);
+		
 		Axis axis = Axis.values()[axisId];
 		switch (axis) {
 			case LEFT_STICK_Y:
@@ -55,14 +63,12 @@ public class GamepadHandler implements DeviceListener {
 
 	@Override
 	public void handleDeviceAdded(Device device) {
-		// TODO Implement this
-		System.out.println("Device Added: " + device);
+		System.out.println("Device Added: " + device.toString());
 	}
 
 	@Override
 	public void handleDeviceRemoved(Device device) {
-		// TODO Implement this
-		System.out.println("Device Removed: " + device);
+		System.out.println("Device Removed: " + device.toString());
 	}
 
 }
