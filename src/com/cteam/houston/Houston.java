@@ -171,7 +171,6 @@ public class Houston {
 				main.setConnectionStatus(true);
 			}
 		});
-		PacketManager.instance().setUp();
 		
 		GamepadListener.getInstance().addDeviceListener(new GamepadHandler());
 		NativeGamepad.addListener(GamepadListener.getInstance());

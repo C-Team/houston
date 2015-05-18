@@ -46,6 +46,7 @@ public class MainFrame extends JFrame {
 		mainContent.setLayout(new BorderLayout());
 		
 		connectButton = new JButton("Connect");
+		connectButton.setFocusable(false);
 		connectButton.addActionListener(new ActionListener() {
 			private boolean connect = true;;
 			
@@ -74,7 +75,7 @@ public class MainFrame extends JFrame {
 		
 		Box labelBox = Box.createVerticalBox();
 		labelBox.add(Box.createVerticalGlue());
-		//labelBox.add(connectButton);
+		labelBox.add(connectButton);
 		labelBox.add(Box.createVerticalStrut(20));
 		labelBox.add(connectionLabel);
 		labelBox.add(Box.createVerticalStrut(20));

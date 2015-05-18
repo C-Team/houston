@@ -83,9 +83,9 @@ public class PacketManager {
 	}
 	
 	public void tearDown() {
+		shouldRun = false;
 		if (socket != null) {
 			try {
-				shouldRun = false;
 				socket.close();
 			} catch (Exception e) {
 				e.printStackTrace();
