@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="all" name="Houston">
+  <property name="one-jar.dist.dir" value="${basedir}"/>
+
+  <property name="src.dir" location="${basedir}/src"/>
+  <property name="libs.dir" location="${basedir}/libs"/>
+  <property name="libs.osx64.dir" location="${libs.dir}/osx"/>
+  <property name="libs.lin32.dir" location="${libs.dir}/lin32"/>
+  <property name="libs.lin64.dir" location="${libs.dir}/lin64"/>
+  <property name="libs.win32.dir" location="${libs.dir}/win32"/>
+  <property name="libs.win64.dir" location="${libs.dir}/win64"/>
+
+  <property name="lib.dir" location="${basedir}/lib"/>
+  <property name="build.dir" location="${basedir}/build"/>
+
+  <property name="classes.dir" location="${basedir}/classes"/>
+
+  <target name="init" depends="clean">
+    <mkdir dir="${classes.dir}"/>
+    <mkdir dir="${classes.dir}/lib"/>
+    <mkdir dir="${classes.dir}/src"/>
+    <mkdir dir="${build.dir}"/>
+  </target>
+  
+  <target name="houston-java" depends="init">
+    <javac srcdir="${src.dir}"
+           destdir="${classes.dir}/src"
+           includeantruntime="false"
+           source="1.7"
+           target="1.7"
+           classpath="${build.dir}">
+      <classpath>
+        <fileset dir="${libs.dir}" includes="*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <import file="one-jar-ant-task.xml"/>
+
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+    <delete dir="${classes.dir}"/>
+  </target>
+
+  <target name="all" depends="clean,houston-osx,houston-lin64"/>
+
+  <target name="houston-osx" depends="houston-java">
+    <!-- construct one-jar file -->
+    <one-jar destfile="${build.dir}/houston-osx64.jar">
+      <manifest>
+        <attribute name="One-Jar-Main-Class" value="com.cteam.houston.Houston"/>
+      </manifest>
+
+      <main>
+        <!-- construct houston.jar -->
+        <fileset dir="${classes.dir}/src"/>
+      </main>
+
+      <lib>
+        <fileset dir="${libs.dir}" includes="*.jar"/>
+      </lib>
+
+      <binlib>
+        <fileset dir="${libs.osx64.dir}" includes="*"/>
+      </binlib>
+    </one-jar>
+  </target>
+
+  <target name="houston-lin64" depends="houston-java">
+    <!-- construct one-jar file -->
+    <one-jar destfile="${build.dir}/houston-lin64.jar">
+      <manifest>
+        <attribute name="One-Jar-Main-Class" value="com.cteam.houston.Houston"/>
+      </manifest>
+
+      <main>
+        <!-- construct houston.jar -->
+        <fileset dir="${classes.dir}/src"/>
+      </main>
+
+      <lib>
+        <fileset dir="${libs.dir}" includes="*.jar"/>
+      </lib>
+
+      <binlib>
+        <fileset dir="${libs.lin64.dir}" includes="*"/>
+      </binlib>
+    </one-jar>
+  </target>
+
+</project>
