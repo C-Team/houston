@@ -61,8 +61,8 @@ public class Houston {
 		
 		sendCommand(Command.SPEED);
 		sendCommand(Command.DIRECTION);
-		sendCommand(Command.DILDO_VERTICAL_SPEED);
-		sendCommand(Command.DILDO_WHEEL_SPEED);
+		sendCommand(Command.DIGGER_VERTICAL_SPEED);
+		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
 	public static void setSpeed(byte speed) {
@@ -78,47 +78,47 @@ public class Houston {
 	public static void increaseDildoWheelSpeed() {
 		currentDildoWheelSpeed += 10;
 		if (currentDildoWheelSpeed > 63) currentDildoWheelSpeed = 63;
-		sendCommand(Command.DILDO_WHEEL_SPEED);
+		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
 	public static void decreaseDildoWheelSpeed() {
 		currentDildoWheelSpeed -= 10;
 		if (currentDildoWheelSpeed < -64) currentDildoWheelSpeed = -64;
-		sendCommand(Command.DILDO_WHEEL_SPEED);
+		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
 	public static void increaseDildoVerticalPosition() {
 		currentDildoPosition += 1;
 		if (currentDildoPosition > 16) currentDildoPosition = 16;
-		sendCommand(Command.DILDO_VERTICAL_POSITION);
+		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void decreaseDildoVerticalPosition() {
 		currentDildoPosition -= 1;
 		if (currentDildoPosition < 0) currentDildoPosition = 0;
-		sendCommand(Command.DILDO_VERTICAL_POSITION);
+		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void increaseDildoVerticalSpeed() {
 		currentDildoSpeed += 10;
 		if (currentDildoSpeed > 63) currentDildoSpeed = 63;
-		sendCommand(Command.DILDO_VERTICAL_SPEED);
+		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
 	public static void decreaseDildoVerticalSpeed() {
 		currentDildoSpeed -= 10;
 		if (currentDildoSpeed < -64) currentDildoSpeed = -64;
-		sendCommand(Command.DILDO_VERTICAL_SPEED);
+		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
 	public static void setDildoVerticalPosition(byte position) {
 		currentDildoPosition = position;
-		sendCommand(Command.DILDO_VERTICAL_POSITION);
+		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void setDildoVerticalSpeed(byte speed) {
 		currentDildoSpeed = speed;
-		sendCommand(Command.DILDO_VERTICAL_SPEED);
+		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
 	private static void sendCommand(Command command) {
@@ -130,13 +130,13 @@ public class Houston {
 			case DIRECTION:
 				value = currentDirection;
 				break;
-			case DILDO_WHEEL_SPEED:
+			case DIGGER_WHEEL_SPEED:
 				value = currentDildoWheelSpeed;
 				break;
-			case DILDO_VERTICAL_POSITION:
+			case DIGGER_VERTICAL_POSITION:
 				value = currentDildoPosition;
 				break;
-			case DILDO_VERTICAL_SPEED:
+			case DIGGER_VERTICAL_SPEED:
 				value = currentDildoSpeed;
 				break;
 			default:

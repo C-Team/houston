@@ -1,8 +1,8 @@
 package com.cteam.houston.network;
 
 public enum Command {
-	SPEED(0), DIRECTION(1), DILDO_WHEEL_SPEED(2), DILDO_VERTICAL_SPEED(3), 
-	DILDO_VERTICAL_POSITION(4);
+	SPEED(0), DIRECTION(1), DIGGER_WHEEL_SPEED(2), DIGGER_VERTICAL_SPEED(3), 
+	DIGGER_VERTICAL_POSITION(4);
 	
 	public final byte value;
 	

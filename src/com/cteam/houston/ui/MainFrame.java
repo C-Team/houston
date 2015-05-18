@@ -153,15 +153,15 @@ public class MainFrame extends JFrame {
 				commandLabel.setText("Command: Direction");
 				directionLabel.setText("Direction: " + String.valueOf(value));
 				break;
-			case DILDO_WHEEL_SPEED:
+			case DIGGER_WHEEL_SPEED:
 				commandLabel.setText("Command: Digger Wheel Speed");
 				diggerSpeedLabel.setText("Digger Wheel Speed: " + String.valueOf(value));
 				break;
-			case DILDO_VERTICAL_POSITION:
+			case DIGGER_VERTICAL_POSITION:
 				commandLabel.setText("Command: Actuator Position");
 				dildoPositionLabel.setText("Actuator Position: " + String.valueOf(value));
 				break;
-			case DILDO_VERTICAL_SPEED:
+			case DIGGER_VERTICAL_SPEED:
 				commandLabel.setText("Command: Actuator Speed");
 				dildoSpeedLabel.setText("Actuator Speed: " + String.valueOf(value));
 				break;
