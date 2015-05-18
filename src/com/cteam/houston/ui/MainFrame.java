@@ -66,6 +66,14 @@ public class MainFrame extends JFrame {
 				connect = !connect;
 			}
 		});
+		connectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				initLabels();
+				connectButton.removeActionListener(this);
+			}
+		});
+		
 		
 		hostText = new JTextField(DEFAULT_IP);
 		hostText.setToolTipText("Apollo's IP Address");
@@ -169,5 +177,14 @@ public class MainFrame extends JFrame {
 			break;
 		}
 		
+	}
+	
+	private void initLabels() {
+		commandLabel.setText("Command: Awaiting command...");
+		speedLabel.setText("Power: 0");
+		directionLabel.setText("Direction: 0");
+		diggerSpeedLabel.setText("Digger Wheel Speed: 0");
+		dildoPositionLabel.setText("Actuator Position: N/A");
+		dildoSpeedLabel.setText("Actuator Speed: 0");
 	}
 }

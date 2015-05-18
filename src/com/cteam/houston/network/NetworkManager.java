@@ -83,6 +83,7 @@ public class NetworkManager {
 	
 	public void tearDown() {
 		shouldRun = false;
+		networkThread.interrupt();
 		if (socket != null) {
 			try {
 				if (socket.isConnected()) {
@@ -90,9 +91,13 @@ public class NetworkManager {
 					socket.getInputStream().read();
 				}
 				socket.close();
+				socket = null;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		if (listener != null) {
+			listener.onDisconnect();
 		}
 	}
 	
