@@ -9,7 +9,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.SwingUtilities;
 
 public class NetworkManager {
-	private static final String HOST = "192.168.0.103";
 	private static final int PORT = 9001;
 	private static final int RETRY_RATE = 250; // ms
 	private static final int CONNECT_TIMEOUT = 1000; // ms
@@ -44,14 +43,14 @@ public class NetworkManager {
 		return isConnected;
 	}
 	
-	public void setUp() {
+	public void setUp(final String host) {
 		shouldRun = true;
 		networkThread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// This will block until a connection is established or we are told to bail.
-				if (!establishConnection()) return; 
+				if (!establishConnection(host)) return; 
 				while (shouldRun) {
 					try {
 						Packet packet = packetQueue.take();
@@ -71,7 +70,7 @@ public class NetworkManager {
 							} catch (IOException e) {}
 							socket = null;
 							// This will block until a connection is established or we are told to bail.
-							if (!establishConnection()) return;
+							if (!establishConnection(host)) return;
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -86,8 +85,10 @@ public class NetworkManager {
 		shouldRun = false;
 		if (socket != null) {
 			try {
-				socket.shutdownOutput();
-				socket.getInputStream().read();
+				if (socket.isConnected()) {
+					socket.shutdownOutput();
+					socket.getInputStream().read();
+				}
 				socket.close();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -107,8 +108,8 @@ public class NetworkManager {
 		}
 	}
 	
-	private boolean establishConnection() {
-		InetSocketAddress address = new InetSocketAddress(HOST, PORT);
+	private boolean establishConnection(String host) {
+		InetSocketAddress address = new InetSocketAddress(host, PORT);
 		
 		while (socket == null && shouldRun) {
 			try {

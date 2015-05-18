@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import com.cteam.houston.Houston;
 import com.cteam.houston.network.Command;
@@ -17,9 +20,12 @@ import com.cteam.houston.network.Command;
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -7102600235458420220L;
 
-	private static final int HEIGHT = 350;
-	private static final int WIDTH = 300;
+	private static final String DEFAULT_IP = "192.168.0.103";
 	
+	private static final int WIDTH = 350;
+	private static final int HEIGHT = 300;
+	
+	private JTextField hostText;
 	private JButton connectButton;
 	private JLabel connectionLabel;
 	private JLabel commandLabel;
@@ -36,15 +42,13 @@ public class MainFrame extends JFrame {
 		MainFrame frame = new MainFrame();
 		frame.build();
 		frame.setSize(WIDTH, HEIGHT);
+		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		return frame;
 	}
 	
 	private void build() {
-		Container mainContent = getContentPane();
-		mainContent.setLayout(new BorderLayout());
-		
 		connectButton = new JButton("Connect");
 		connectButton.setFocusable(false);
 		connectButton.addActionListener(new ActionListener() {
@@ -54,7 +58,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (connect) {
 					connectButton.setText("Disconnect");
-					Houston.connect();
+					Houston.connect(hostText.getText());
 				} else {
 					connectButton.setText("Connect");
 					Houston.disconnect();
@@ -63,6 +67,21 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
+		hostText = new JTextField(DEFAULT_IP);
+		hostText.setToolTipText("Apollo's IP Address");
+		hostText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.this.requestFocus();
+			}
+		});
+		
+		JLabel hostTextLabel = new JLabel("IP Address:");
+		Box hostBox = Box.createHorizontalBox();
+		hostBox.add(Box.createHorizontalStrut(10));
+		hostBox.add(hostTextLabel);
+		hostBox.add(hostText);
+		hostBox.add(Box.createHorizontalStrut(10));
 		
 		connectionLabel = new JLabel("Connection Status: Not Connected");
 		connectionLabel.setForeground(Color.RED);
@@ -75,29 +94,47 @@ public class MainFrame extends JFrame {
 		
 		Box labelBox = Box.createVerticalBox();
 		labelBox.add(Box.createVerticalGlue());
+		labelBox.add(Box.createVerticalStrut(10));
+		labelBox.add(hostBox);
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(connectButton);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(connectionLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(commandLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(speedLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(directionLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(diggerSpeedLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(dildoSpeedLabel);
-		labelBox.add(Box.createVerticalStrut(20));
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(dildoPositionLabel);
+		labelBox.add(Box.createVerticalStrut(10));
 		labelBox.add(Box.createVerticalGlue());
 		
 		Box mainBox = Box.createHorizontalBox();
 		mainBox.add(Box.createHorizontalGlue());
+		mainBox.add(Box.createHorizontalStrut(15));
 		mainBox.add(labelBox);
+		mainBox.add(Box.createHorizontalStrut(15));
 		mainBox.add(Box.createHorizontalGlue());
 		
+		Container mainContent = getContentPane();
+		mainContent.setLayout(new BorderLayout());
 		mainContent.add(mainBox, "Center");
+		
+		// Make sure when we click outside the text box, the window 
+		// gets focus so keyboard events will work.
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requestFocus();
+				e.consume();
+			}
+		});
 	}
 	
 	public void setConnectionStatus(boolean connected) {

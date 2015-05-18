@@ -148,8 +148,8 @@ public class Houston {
 		main.updateValues(command, value);
 	}
 	
-	public static void connect() {
-		NetworkManager.instance().setUp();
+	public static void connect(String host) {
+		NetworkManager.instance().setUp(host);
 	}
 	
 	public static void disconnect() {
