@@ -9,10 +9,7 @@ public class GamepadHandler implements DeviceListener {
 		RIGHT_STICK_X(2), RIGHT_STICK_Y(3),
 		LEFT_TRIGGER(4), RIGHT_TRIGGER(5);
 		
-		private int id;
-		
 		private Axis(int id) {
-			this.id = id;
 		}
 	}
 	
@@ -24,10 +21,7 @@ public class GamepadHandler implements DeviceListener {
 		SPECIAL(15),
 		A(16), B(17), X(18), Y(19);
 		
-		private final int id;
-		
 		private Button(int id) {
-			this.id = id;
 		}
 	}
 	
