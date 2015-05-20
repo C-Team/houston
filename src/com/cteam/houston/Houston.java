@@ -135,13 +135,13 @@ public class Houston {
 	
 	
 	///////////////////// LARGE CONVEYOR //////////////////////////
-	public static void increaseLargeConveyorSpeed() {
+	public static void decreaseLargeConveyorSpeed() {
 		largeConveyorSpeed += 10;
 		if (largeConveyorSpeed > 63) largeConveyorSpeed = 63;
 		sendCommand(Command.LARGE_CONVEYOR_SPEED);
 	}
 	
-	public static void decreaseLargeConveyorSpeed() {
+	public static void increaseLargeConveyorSpeed() {
 		largeConveyorSpeed -= 10;
 		if (largeConveyorSpeed < -64) largeConveyorSpeed = -64;
 		sendCommand(Command.LARGE_CONVEYOR_SPEED);
@@ -154,13 +154,13 @@ public class Houston {
 	//////////////////// END LARGE CONVEYOR ///////////////////////
 	
 	//////////////////// SMALL CONVEYOR //////////////////////////
-	public static void increaseSmallConveyorSpeed() {
+	public static void decreaseSmallConveyorSpeed() {
 		smallConveyorSpeed += 10;
 		if (smallConveyorSpeed > 63) smallConveyorSpeed = 63;
 		sendCommand(Command.SMALL_CONVEYOR_SPEED);
 	}
 	
-	public static void decreaseSmallConveyorSpeed() {
+	public static void increaseSmallConveyorSpeed() {
 		smallConveyorSpeed -= 10;
 		if (smallConveyorSpeed < -64) smallConveyorSpeed = -64;
 		sendCommand(Command.SMALL_CONVEYOR_SPEED);
