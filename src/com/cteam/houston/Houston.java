@@ -86,13 +86,13 @@ public class Houston {
 	/////////////// END MOVEMENT ///////////////////////////////////
 	
 	//////////////////// DIGGER ////////////////////////////////////////
-	public static void increaseDiggerWheelSpeed() {
+	public static void decreaseDiggerWheelSpeed() {
 		diggerWheelSpeed += 10;
 		if (diggerWheelSpeed > 63) diggerWheelSpeed = 63;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
-	public static void decreaseDiggerWheelSpeed() {
+	public static void increaseDiggerWheelSpeed() {
 		diggerWheelSpeed -= 10;
 		if (diggerWheelSpeed < -64) diggerWheelSpeed = -64;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
