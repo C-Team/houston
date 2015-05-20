@@ -83,7 +83,9 @@ public class NetworkManager {
 	
 	public void tearDown() {
 		shouldRun = false;
-		networkThread.interrupt();
+		if (networkThread != null) {
+			networkThread.interrupt();
+		}
 		if (socket != null) {
 			try {
 				if (socket.isConnected()) {

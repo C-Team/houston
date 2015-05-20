@@ -63,11 +63,15 @@ public class Houston {
 		speed = 0;
 		diggerSpeed = 0;
 		diggerWheelSpeed = 0;
+		largeConveyorState = false;
+		smallConveyorState = false;
 		
 		sendCommand(Command.SPEED);
 		sendCommand(Command.DIRECTION);
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
+		sendCommand(Command.LARGE_CONVEYOR_STATE);
+		sendCommand(Command.SMALL_CONVEYOR_STATE);
 	}
 	
 	public static void setSpeed(byte newSpeed) {
