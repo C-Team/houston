@@ -37,22 +37,40 @@ public class KeyboardController implements KeyListener {
 				Houston.stop();
 				break;
 			case KeyEvent.VK_J:
-				Houston.increaseDildoWheelSpeed();
+				Houston.increaseDiggerWheelSpeed();
 				break;
 			case KeyEvent.VK_K:
-				Houston.decreaseDildoWheelSpeed();
+				Houston.decreaseDiggerWheelSpeed();
 				break;
 			case KeyEvent.VK_U:
-				Houston.increaseDildoVerticalSpeed();
+				Houston.increaseDiggerVerticalSpeed();
 				break;
 			case KeyEvent.VK_I:
-				Houston.decreaseDildoVerticalSpeed();
+				Houston.decreaseDiggerVerticalSpeed();
 				break;
 			case KeyEvent.VK_M:
-				Houston.increaseDildoVerticalPosition();
+				Houston.increaseDiggerVerticalPosition();
 				break;
 			case KeyEvent.VK_COMMA:
-				Houston.decreaseDildoVerticalPosition();
+				Houston.decreaseDiggerVerticalPosition();
+				break;
+			case KeyEvent.VK_R:
+				Houston.increaseLargeConveyorSpeed();
+				break;
+			case KeyEvent.VK_T:
+				Houston.decreaseLargeConveyorSpeed();
+				break;
+			case KeyEvent.VK_Y:
+				Houston.toggleLargeConveyorState();
+				break;
+			case KeyEvent.VK_F:
+				Houston.increaseSmallConveyorSpeed();
+				break;
+			case KeyEvent.VK_G:
+				Houston.decreaseSmallConveyorSpeed();
+				break;
+			case KeyEvent.VK_H:
+				Houston.toggleSmallConveyorState();
 				break;
 		}
 	}

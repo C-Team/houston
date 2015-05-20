@@ -15,10 +15,15 @@ public class Houston {
 	private static MainFrame main;
 	private static byte currentSpeed = 0;
 	private static byte currentDirection = 0;
-	private static byte currentDildoWheelSpeed = 0;
-	private static byte currentDildoSpeed = 0;
-	private static byte currentDildoPosition = 0;
+	private static byte currentDiggerWheelSpeed = 0;
+	private static byte currentDiggerSpeed = 0;
+	private static byte currentDiggerPosition = 0;
+	private static byte currentLargeConveyorSpeed = 0;
+	private static boolean currentLargeConveyorState = false;
+	private static byte currentSmallConveyorSpeed = 0;
+	private static boolean currentSmallConveyorState = false;
 	
+	/////////////// MOVEMENT ///////////////////////////////////
 	public static void speedUp() {
 		currentSpeed += (byte) 10;
 		if (currentSpeed > 63) currentSpeed = 63;
@@ -56,8 +61,8 @@ public class Houston {
 	public static void stop() {
 		currentDirection = 0;
 		currentSpeed = 0;
-		currentDildoSpeed = 0;
-		currentDildoWheelSpeed = 0;
+		currentDiggerSpeed = 0;
+		currentDiggerWheelSpeed = 0;
 		
 		sendCommand(Command.SPEED);
 		sendCommand(Command.DIRECTION);
@@ -74,52 +79,95 @@ public class Houston {
 		currentDirection = direction;
 		sendCommand(Command.DIRECTION);
 	}
+	/////////////// END MOVEMENT ///////////////////////////////////
 	
-	public static void increaseDildoWheelSpeed() {
-		currentDildoWheelSpeed += 10;
-		if (currentDildoWheelSpeed > 63) currentDildoWheelSpeed = 63;
+	//////////////////// DIGGER ////////////////////////////////////////
+	public static void increaseDiggerWheelSpeed() {
+		currentDiggerWheelSpeed += 10;
+		if (currentDiggerWheelSpeed > 63) currentDiggerWheelSpeed = 63;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
-	public static void decreaseDildoWheelSpeed() {
-		currentDildoWheelSpeed -= 10;
-		if (currentDildoWheelSpeed < -64) currentDildoWheelSpeed = -64;
+	public static void decreaseDiggerWheelSpeed() {
+		currentDiggerWheelSpeed -= 10;
+		if (currentDiggerWheelSpeed < -64) currentDiggerWheelSpeed = -64;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
-	public static void increaseDildoVerticalPosition() {
-		currentDildoPosition += 1;
-		if (currentDildoPosition > 16) currentDildoPosition = 16;
+	public static void increaseDiggerVerticalPosition() {
+		currentDiggerPosition += 1;
+		if (currentDiggerPosition > 16) currentDiggerPosition = 16;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
-	public static void decreaseDildoVerticalPosition() {
-		currentDildoPosition -= 1;
-		if (currentDildoPosition < 0) currentDildoPosition = 0;
+	public static void decreaseDiggerVerticalPosition() {
+		currentDiggerPosition -= 1;
+		if (currentDiggerPosition < 0) currentDiggerPosition = 0;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
-	public static void increaseDildoVerticalSpeed() {
-		currentDildoSpeed += 10;
-		if (currentDildoSpeed > 63) currentDildoSpeed = 63;
+	public static void increaseDiggerVerticalSpeed() {
+		currentDiggerSpeed += 10;
+		if (currentDiggerSpeed > 63) currentDiggerSpeed = 63;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
-	public static void decreaseDildoVerticalSpeed() {
-		currentDildoSpeed -= 10;
-		if (currentDildoSpeed < -64) currentDildoSpeed = -64;
+	public static void decreaseDiggerVerticalSpeed() {
+		currentDiggerSpeed -= 10;
+		if (currentDiggerSpeed < -64) currentDiggerSpeed = -64;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
-	public static void setDildoVerticalPosition(byte position) {
-		currentDildoPosition = position;
+	public static void setDiggerVerticalPosition(byte position) {
+		currentDiggerPosition = position;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
-	public static void setDildoVerticalSpeed(byte speed) {
-		currentDildoSpeed = speed;
+	public static void setDiggerVerticalSpeed(byte speed) {
+		currentDiggerSpeed = speed;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
+	////////////////////// END DIGGER /////////////////////////////
+	
+	
+	///////////////////// LARGE CONVEYOR //////////////////////////
+	public static void increaseLargeConveyorSpeed() {
+		currentLargeConveyorSpeed += 10;
+		if (currentLargeConveyorSpeed > 63) currentLargeConveyorSpeed = 63;
+		sendCommand(Command.LARGE_CONVEYOR_SPEED);
+	}
+	
+	public static void decreaseLargeConveyorSpeed() {
+		currentLargeConveyorSpeed -= 10;
+		if (currentLargeConveyorSpeed < -64) currentLargeConveyorSpeed = -64;
+		sendCommand(Command.LARGE_CONVEYOR_SPEED);
+	}
+	
+	public static void toggleLargeConveyorState() {
+		currentLargeConveyorState = !currentLargeConveyorState;
+		sendCommand(Command.LARGE_CONVEYOR_STATE);
+	}
+	//////////////////// END LARGE CONVEYOR ///////////////////////
+	
+	//////////////////// SMALL CONVEYOR //////////////////////////
+	public static void increaseSmallConveyorSpeed() {
+		currentSmallConveyorSpeed += 10;
+		if (currentSmallConveyorSpeed > 63) currentSmallConveyorSpeed = 63;
+		sendCommand(Command.SMALL_CONVEYOR_SPEED);
+	}
+	
+	public static void decreaseSmallConveyorSpeed() {
+		currentSmallConveyorSpeed -= 10;
+		if (currentSmallConveyorSpeed < -64) currentSmallConveyorSpeed = -64;
+		sendCommand(Command.SMALL_CONVEYOR_SPEED);
+	}
+	
+	public static void toggleSmallConveyorState() {
+		currentSmallConveyorState = !currentSmallConveyorState;
+		sendCommand(Command.SMALL_CONVEYOR_STATE);
+	}
+	//////////////////// END SMALL CONVEYOR //////////////////////////
+	
 	
 	private static void sendCommand(Command command) {
 		byte value;
@@ -131,13 +179,25 @@ public class Houston {
 				value = currentDirection;
 				break;
 			case DIGGER_WHEEL_SPEED:
-				value = currentDildoWheelSpeed;
+				value = currentDiggerWheelSpeed;
 				break;
 			case DIGGER_VERTICAL_POSITION:
-				value = currentDildoPosition;
+				value = currentDiggerPosition;
 				break;
 			case DIGGER_VERTICAL_SPEED:
-				value = currentDildoSpeed;
+				value = currentDiggerSpeed;
+				break;
+			case LARGE_CONVEYOR_SPEED:
+				value = currentLargeConveyorSpeed;
+				break;
+			case LARGE_CONVEYOR_STATE:
+				value = currentLargeConveyorState ? (byte) 1 : (byte) 0;
+				break;
+			case SMALL_CONVEYOR_SPEED:
+				value = currentSmallConveyorSpeed;
+				break;
+			case SMALL_CONVEYOR_STATE:
+				value = currentSmallConveyorState ? (byte) 1 : (byte) 0;
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid command given!");
