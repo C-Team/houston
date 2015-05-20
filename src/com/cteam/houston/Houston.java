@@ -13,56 +13,56 @@ import com.cteam.houston.ui.MainFrame;
 public class Houston {
 
 	private static MainFrame main;
-	private static byte currentSpeed = 0;
-	private static byte currentDirection = 0;
-	private static byte currentDiggerWheelSpeed = 0;
-	private static byte currentDiggerSpeed = 0;
-	private static byte currentDiggerPosition = 0;
-	private static byte currentLargeConveyorSpeed = 0;
-	private static boolean currentLargeConveyorState = false;
-	private static byte currentSmallConveyorSpeed = 0;
-	private static boolean currentSmallConveyorState = false;
+	private static byte speed = 0;
+	private static byte direction = 0;
+	private static byte diggerWheelSpeed = 0;
+	private static byte diggerSpeed = 0;
+	private static byte diggerPosition = 0;
+	private static byte largeConveyorSpeed = 0;
+	private static boolean largeConveyorState = false;
+	private static byte smallConveyorSpeed = 0;
+	private static boolean smallConveyorState = false;
 	
 	/////////////// MOVEMENT ///////////////////////////////////
 	public static void speedUp() {
-		currentSpeed += (byte) 10;
-		if (currentSpeed > 63) currentSpeed = 63;
+		speed += (byte) 10;
+		if (speed > 63) speed = 63;
 		sendCommand(Command.SPEED);
 	}
 	
 	public static void slowDown() {
-		currentSpeed -= (byte) 10;
-		if (currentSpeed < -64) currentSpeed = -64;
+		speed -= (byte) 10;
+		if (speed < -64) speed = -64;
 		sendCommand(Command.SPEED);
 	}
 	
 	public static void forward() {
-		currentDirection = 0;
+		direction = 0;
 		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void backward() {
-		currentDirection = 0;
+		direction = 0;
 		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void turnRight() {
-		currentDirection += 10;
-		if (currentDirection > 63) currentDirection = 63;
+		direction += 10;
+		if (direction > 63) direction = 63;
 		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void turnLeft() {
-		currentDirection -= 10;
-		if (currentDirection < -64) currentDirection = -64;
+		direction -= 10;
+		if (direction < -64) direction = -64;
 		sendCommand(Command.DIRECTION);
 	}
 	
 	public static void stop() {
-		currentDirection = 0;
-		currentSpeed = 0;
-		currentDiggerSpeed = 0;
-		currentDiggerWheelSpeed = 0;
+		direction = 0;
+		speed = 0;
+		diggerSpeed = 0;
+		diggerWheelSpeed = 0;
 		
 		sendCommand(Command.SPEED);
 		sendCommand(Command.DIRECTION);
@@ -70,61 +70,61 @@ public class Houston {
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
-	public static void setSpeed(byte speed) {
-		currentSpeed = speed;
+	public static void setSpeed(byte newSpeed) {
+		speed = newSpeed;
 		sendCommand(Command.SPEED);
 	}
 	
-	public static void setDirection(byte direction) {
-		currentDirection = direction;
+	public static void setDirection(byte newDirection) {
+		direction = newDirection;
 		sendCommand(Command.DIRECTION);
 	}
 	/////////////// END MOVEMENT ///////////////////////////////////
 	
 	//////////////////// DIGGER ////////////////////////////////////////
 	public static void increaseDiggerWheelSpeed() {
-		currentDiggerWheelSpeed += 10;
-		if (currentDiggerWheelSpeed > 63) currentDiggerWheelSpeed = 63;
+		diggerWheelSpeed += 10;
+		if (diggerWheelSpeed > 63) diggerWheelSpeed = 63;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
 	public static void decreaseDiggerWheelSpeed() {
-		currentDiggerWheelSpeed -= 10;
-		if (currentDiggerWheelSpeed < -64) currentDiggerWheelSpeed = -64;
+		diggerWheelSpeed -= 10;
+		if (diggerWheelSpeed < -64) diggerWheelSpeed = -64;
 		sendCommand(Command.DIGGER_WHEEL_SPEED);
 	}
 	
 	public static void increaseDiggerVerticalPosition() {
-		currentDiggerPosition += 1;
-		if (currentDiggerPosition > 16) currentDiggerPosition = 16;
+		diggerPosition += 1;
+		if (diggerPosition > 16) diggerPosition = 16;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void decreaseDiggerVerticalPosition() {
-		currentDiggerPosition -= 1;
-		if (currentDiggerPosition < 0) currentDiggerPosition = 0;
+		diggerPosition -= 1;
+		if (diggerPosition < 0) diggerPosition = 0;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void increaseDiggerVerticalSpeed() {
-		currentDiggerSpeed += 10;
-		if (currentDiggerSpeed > 63) currentDiggerSpeed = 63;
+		diggerSpeed += 10;
+		if (diggerSpeed > 63) diggerSpeed = 63;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
 	public static void decreaseDiggerVerticalSpeed() {
-		currentDiggerSpeed -= 10;
-		if (currentDiggerSpeed < -64) currentDiggerSpeed = -64;
+		diggerSpeed -= 10;
+		if (diggerSpeed < -64) diggerSpeed = -64;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	
 	public static void setDiggerVerticalPosition(byte position) {
-		currentDiggerPosition = position;
+		diggerPosition = position;
 		sendCommand(Command.DIGGER_VERTICAL_POSITION);
 	}
 	
 	public static void setDiggerVerticalSpeed(byte speed) {
-		currentDiggerSpeed = speed;
+		diggerSpeed = speed;
 		sendCommand(Command.DIGGER_VERTICAL_SPEED);
 	}
 	////////////////////// END DIGGER /////////////////////////////
@@ -132,38 +132,38 @@ public class Houston {
 	
 	///////////////////// LARGE CONVEYOR //////////////////////////
 	public static void increaseLargeConveyorSpeed() {
-		currentLargeConveyorSpeed += 10;
-		if (currentLargeConveyorSpeed > 63) currentLargeConveyorSpeed = 63;
+		largeConveyorSpeed += 10;
+		if (largeConveyorSpeed > 63) largeConveyorSpeed = 63;
 		sendCommand(Command.LARGE_CONVEYOR_SPEED);
 	}
 	
 	public static void decreaseLargeConveyorSpeed() {
-		currentLargeConveyorSpeed -= 10;
-		if (currentLargeConveyorSpeed < -64) currentLargeConveyorSpeed = -64;
+		largeConveyorSpeed -= 10;
+		if (largeConveyorSpeed < -64) largeConveyorSpeed = -64;
 		sendCommand(Command.LARGE_CONVEYOR_SPEED);
 	}
 	
 	public static void toggleLargeConveyorState() {
-		currentLargeConveyorState = !currentLargeConveyorState;
+		largeConveyorState = !largeConveyorState;
 		sendCommand(Command.LARGE_CONVEYOR_STATE);
 	}
 	//////////////////// END LARGE CONVEYOR ///////////////////////
 	
 	//////////////////// SMALL CONVEYOR //////////////////////////
 	public static void increaseSmallConveyorSpeed() {
-		currentSmallConveyorSpeed += 10;
-		if (currentSmallConveyorSpeed > 63) currentSmallConveyorSpeed = 63;
+		smallConveyorSpeed += 10;
+		if (smallConveyorSpeed > 63) smallConveyorSpeed = 63;
 		sendCommand(Command.SMALL_CONVEYOR_SPEED);
 	}
 	
 	public static void decreaseSmallConveyorSpeed() {
-		currentSmallConveyorSpeed -= 10;
-		if (currentSmallConveyorSpeed < -64) currentSmallConveyorSpeed = -64;
+		smallConveyorSpeed -= 10;
+		if (smallConveyorSpeed < -64) smallConveyorSpeed = -64;
 		sendCommand(Command.SMALL_CONVEYOR_SPEED);
 	}
 	
 	public static void toggleSmallConveyorState() {
-		currentSmallConveyorState = !currentSmallConveyorState;
+		smallConveyorState = !smallConveyorState;
 		sendCommand(Command.SMALL_CONVEYOR_STATE);
 	}
 	//////////////////// END SMALL CONVEYOR //////////////////////////
@@ -173,31 +173,31 @@ public class Houston {
 		byte value;
 		switch (command) {
 			case SPEED:
-				value = currentSpeed;
+				value = speed;
 				break;
 			case DIRECTION:
-				value = currentDirection;
+				value = direction;
 				break;
 			case DIGGER_WHEEL_SPEED:
-				value = currentDiggerWheelSpeed;
+				value = diggerWheelSpeed;
 				break;
 			case DIGGER_VERTICAL_POSITION:
-				value = currentDiggerPosition;
+				value = diggerPosition;
 				break;
 			case DIGGER_VERTICAL_SPEED:
-				value = currentDiggerSpeed;
+				value = diggerSpeed;
 				break;
 			case LARGE_CONVEYOR_SPEED:
-				value = currentLargeConveyorSpeed;
+				value = largeConveyorSpeed;
 				break;
 			case LARGE_CONVEYOR_STATE:
-				value = currentLargeConveyorState ? (byte) 1 : (byte) 0;
+				value = largeConveyorState ? (byte) 1 : (byte) 0;
 				break;
 			case SMALL_CONVEYOR_SPEED:
-				value = currentSmallConveyorSpeed;
+				value = smallConveyorSpeed;
 				break;
 			case SMALL_CONVEYOR_STATE:
-				value = currentSmallConveyorState ? (byte) 1 : (byte) 0;
+				value = smallConveyorState ? (byte) 1 : (byte) 0;
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid command given!");
